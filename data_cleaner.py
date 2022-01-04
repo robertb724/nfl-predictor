@@ -119,6 +119,7 @@ with open('spreadspoke_scores_no_pickems.csv', newline='') as csvfile:
             if underdog == team['Team'] and game['schedule_season'] == team['Year']:
                 # print(team['Team'])
                 printStats(team, False)
+        # TODO: Update to print whether cover or not. Boolean instead of score
         print(getFinal(game))
 
 f.close()
