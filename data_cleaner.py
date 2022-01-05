@@ -53,7 +53,7 @@ print(
     'underdog_TurnoverDifferential,',
     'underdog_PenaltyYardDifferential,',
     'underdog_TimeOfPossession,',
-    'final'
+    'did_cover'
 )
 
 def getUnderdog(game):
@@ -120,6 +120,6 @@ with open('spreadspoke_scores_no_pickems.csv', newline='') as csvfile:
                 # print(team['Team'])
                 printStats(team, False)
         # TODO: Update to print whether cover or not. Boolean instead of score
-        print(getFinal(game))
+        print(getFinal(game) < float(game['spread_favorite']))
 
 f.close()
