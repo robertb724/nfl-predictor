@@ -91,7 +91,7 @@ def printStats(team, newline):
         team['PointDifferential'], ",",
         team['TurnoverDifferential'], ",",
         team['PenaltyYardDifferential'], ",",
-        team['TimeOfPossession'], ",", end = ' '
+        team['TimeOfPossession'], end = ' '
     )
     if newline:
         print("")
@@ -109,7 +109,7 @@ with open('latest_games.csv', newline='') as csvfile:
             if underdog == team['Team']:
                 # print(team['Team'])
                 printStats(team, False)
-        # TODO: Update to print whether cover or not. Boolean instead of score
         # print(getFinal(game) < float(game['spread_favorite']))
+        print("")
 
 f.close()
