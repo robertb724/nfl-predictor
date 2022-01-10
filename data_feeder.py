@@ -7,7 +7,7 @@ f = open('current.json')
 teams = json.load(f)
 
 print(
-    # 'team_favorite_id,',
+    'team_favorite_id,',
     'favorite_Score,',
     'favorite_OffensiveYards,',
     'favorite_OffensiveYardsPerPlay,',
@@ -29,8 +29,8 @@ print(
     'favorite_PointDifferential,',
     'favorite_TurnoverDifferential,',
     'favorite_PenaltyYardDifferential,',
-    'favorite_TimeOfPossession,'
-    # 'underdog_id,',
+    'favorite_TimeOfPossession,',
+    'underdog_id,',
     'underdog_Score,',
     'underdog_OffensiveYards,',
     'underdog_OffensiveYardsPerPlay,',
@@ -52,7 +52,8 @@ print(
     'underdog_PointDifferential,',
     'underdog_TurnoverDifferential,',
     'underdog_PenaltyYardDifferential,',
-    'underdog_TimeOfPossession,'
+    'underdog_TimeOfPossession,',
+    'actual'
     # 'did_cover'
 )
 
@@ -66,10 +67,21 @@ def getUnderdog(game):
         print >> sys.stderr, "A"
         sys.exit(1)
 
+def getFinal(game):
+    home = int(game['score_home'])
+    away = int(game['score_away'])
+    if game['team_favorite_id'] == game['team_home']:
+        return (away - home)
+    elif game['team_favorite_id'] == game['team_away']:
+        return (home - away)
+    else:
+        print(game)
+        print >> sys.stderr, "A"
+        sys.exit(1)
 
-def printStats(team, newline):
+def printStats(team):
     print(
-        # team['Team'], ",",
+        team['Team'], ",",
         team['Score'], ",",
         team['OffensiveYards'], ",",
         team['OffensiveYardsPerPlay'], ",",
@@ -91,10 +103,9 @@ def printStats(team, newline):
         team['PointDifferential'], ",",
         team['TurnoverDifferential'], ",",
         team['PenaltyYardDifferential'], ",",
-        team['TimeOfPossession'], end = ' '
+        team['TimeOfPossession'], ",", end = ' '
     )
-    if newline:
-        print("")
+        
 
 with open('latest_games.csv', newline='') as csvfile:
     games = csv.DictReader(csvfile)
@@ -104,12 +115,11 @@ with open('latest_games.csv', newline='') as csvfile:
             # if game['team_favorite_id'] == team['Team'] and game['schedule_season'] == team['Year']:
             if game['team_favorite_id'] == team['Team']:
                 # print(team['Team'], ",", end = ' ')
-                printStats(team, False)
+                printStats(team)
         for team in teams:
             if underdog == team['Team']:
                 # print(team['Team'])
-                printStats(team, False)
-        # print(getFinal(game) < float(game['spread_favorite']))
-        print("")
+                printStats(team)
+        print(getFinal(game) < float(game['spread_favorite']))
 
 f.close()
